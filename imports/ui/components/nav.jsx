@@ -13,43 +13,31 @@ export default class Nav extends React.Component {
   }
 
   render() {
-    let userIcon, username, profileItem
+    let userIcon, username, loginItem, registerItem, settingsItem, logoutItem
 
     if (this.props.user) {
       userIcon = <i className="user icon"></i>
       username = this.props.user.username
-      profileItem = (
-        <div className="item">
-          <div className="header">Profile</div>
-          <div className="menu">
-            <a href="/settings" className="item">Settings</a>
-            <a onClick={ this.logout } className="item">Logout</a>
-          </div>
-        </div>
-      )
+      settingsItem = <a href="/settings" className="item">Settings</a>
+      logoutItem = <a onClick={ this.logout } className="item">Logout</a>
     } else {
       userIcon = <i className="remove user icon"></i>
-      profileItem = (
-        <div className="item">
-          <div className="header">Profile</div>
-          <div className="menu">
-            <a href="/login" className="item">Login</a>
-            <a href="/register" className="item">Register</a>
-          </div>
-        </div>
-      )
+      loginItem = <a href="/login" className="item">Login</a>
+      registerItem = <a href="/register" className="item">Register</a>
     }
 
     let navMenu = (
-      <div className="vertical menu">
-        <div className="item">
-          <div className="header">Pages</div>
-          <div className="menu">
-            <a href="/" className="item">Home</a>
-            <a href="/users" className="item">Users</a>
-          </div>
-        </div>
-        { profileItem }
+      <div className="menu">
+        <div className="header">Pages</div>
+        <a href="/" className="item">Home</a>
+        <a href="/games" className="item">Games</a>
+        <a href="/users" className="item">Users</a>
+        <div className="divider"></div>
+        <div className="header">Profile</div>
+        { loginItem }
+        { registerItem }
+        { settingsItem }
+        { logoutItem }
       </div>
     )
 

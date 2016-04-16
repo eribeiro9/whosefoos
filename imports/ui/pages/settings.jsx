@@ -5,7 +5,7 @@ export default class Settings extends React.Component {
   constructor(props) {
     super(props)
 
-    this.user = props.users.find((u) => u._id == Meteor.userId())
+    this.user = props.users.find((u) => u._id === Meteor.userId())
     this.state = {
       isChanged: false
     }
@@ -46,10 +46,10 @@ export default class Settings extends React.Component {
     let gameDefense = this.user.positions.includes('defense')
 
     this.setState({
-      isChanged: formDisplay != gameDisplay
-              || formStatus != gameStatus
-              || formOffense != gameOffense
-              || formDefense != gameDefense
+      isChanged: formDisplay !== gameDisplay
+              || formStatus !== gameStatus
+              || formOffense !== gameOffense
+              || formDefense !== gameDefense
     })
   }
 
@@ -97,18 +97,16 @@ export default class Settings extends React.Component {
                 <label>Status</label>
                 <input type="text" name="status" placeholder="Status" defaultValue={ status } />
               </div>
-              <div className="inline fields">
-                <div className="field">
-                  <div id="offenseCheckbox" className="ui toggle checkbox">
-                    <label>Offense</label>
-                    <input type="checkbox" name="offense" className="hidden" defaultChecked={ offense } />
-                  </div>
+              <div className="field">
+                <div id="offenseCheckbox" className="ui toggle checkbox">
+                  <label>Offense</label>
+                  <input type="checkbox" name="offense" defaultChecked={ offense } />
                 </div>
-                <div className="field">
-                  <div id="defenseCheckbox" className="ui toggle checkbox">
-                    <label>Defense</label>
-                    <input type="checkbox" name="defense" className="hidden" defaultChecked={ defense } />
-                  </div>
+              </div>
+              <div className="field">
+                <div id="defenseCheckbox" className="ui toggle checkbox">
+                  <label>Defense</label>
+                  <input type="checkbox" name="defense" defaultChecked={ defense } />
                 </div>
               </div>
               <input type="submit" value="Submit" className={ buttonClass + ' primary' } />
