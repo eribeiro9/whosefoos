@@ -18,20 +18,20 @@ export default class Nav extends React.Component {
     if (this.props.user) {
       userIcon = <i className="user icon"></i>
       username = this.props.user.username
-      settingsItem = <a href="/settings" className="item">Settings</a>
-      logoutItem = <a onClick={ this.logout } className="item">Logout</a>
+      settingsItem = <a href="/settings" className="item"><i className="settings icon"></i>Settings</a>
+      logoutItem = <a onClick={ this.logout } className="item"><i className="sign out icon"></i>Logout</a>
     } else {
       userIcon = <i className="remove user icon"></i>
-      loginItem = <a href="/login" className="item">Login</a>
-      registerItem = <a href="/register" className="item">Register</a>
+      loginItem = <a href="/login" className="item"><i className="sign in icon"></i>Login</a>
+      registerItem = <a href="/register" className="item"><i className="edit icon"></i>Register</a>
     }
 
     let navMenu = (
       <div className="menu">
         <div className="header">Pages</div>
-        <a href="/" className="item">Home</a>
-        <a href="/games" className="item">Games</a>
-        <a href="/users" className="item">Users</a>
+        <a href="/" className="item"><i className="home icon"></i>Home</a>
+        <a href="/games" className="item"><i className="soccer icon"></i>Games</a>
+        <a href="/users" className="item"><i className="users icon"></i>Users</a>
         <div className="divider"></div>
         <div className="header">Profile</div>
         { loginItem }

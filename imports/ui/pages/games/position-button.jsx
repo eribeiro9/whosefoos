@@ -24,9 +24,16 @@ export default class PositionButton extends React.Component {
 
   render() {
     let user = this.props.user
-    return user
-      ? <div className="ui label">{ user.displayName }</div>
-    : <button type="button" onClick={ this.choosePosition } className="ui mini button">{ this.props.position }</button>
+    if (user) {
+      return <div className="ui black label">{ user.displayName }</div>
+    } else {
+      let buttonClass = 'ui mini button',
+          positionIsOff = this.props.position === 'offense'
+
+      buttonClass += positionIsOff ? ' teal' : ' olive'
+
+      return <button type="button" onClick={ this.choosePosition } className={ buttonClass }>{ this.props.position }</button>
+    }
   }
 }
 

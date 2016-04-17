@@ -31,6 +31,8 @@ export default class Games extends React.Component {
   renderGames() {
     let pendingGames = this.props.games.filter((g) => !g.winner).sort((a, b) => a.created > b.created)
 
+    if (pendingGames.length === 0) return <span>No pending games</span>
+
     return pendingGames.map((g, i) =>
       <Game key={ i } game={ g } users={ this.props.users } />
     )
@@ -44,6 +46,8 @@ export default class Games extends React.Component {
       gameSegment = <AddGameSegment hide={ this.cancelAdd } />
     } else if (Meteor.userId()) {
       gameButton = <button onClick={ this.addGame } className="ui fluid green button">Add game</button>
+    } else {
+      gameButton = <span>Login to add a new game</span>
     }
 
     return (

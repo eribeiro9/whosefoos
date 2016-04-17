@@ -8,7 +8,7 @@ Meteor.methods({
 
     if (user) {
       let league = options.isLeagueGame
-      if (league) var season = 2 // TODO: add way to change season in ui
+      if (league) var season = 2 // TODO: add way to change season in admin ui
 
       Games.insert({
         isLeagueGame: league,
@@ -28,7 +28,7 @@ Meteor.methods({
       throw new Meteor.Error('invalid-permissions', 'You do not have valid permissions')
     }
   },
-  
+
   changePosition: (details) => {
     let user = Meteor.userId()
 
@@ -38,12 +38,24 @@ Meteor.methods({
           teams = game.teams
 
       teams.forEach((t) => {
-        if (t.off === user) t.off = undefined
-        if (t.def === user) t.def = undefined
+        if (t.off === user) t.off = void 0
+        if (t.def === user) t.def = void 0
       })
 
-      if (details.position === 'offense') teams[details.team - 1].off = user
-      else teams[details.team - 1].def = user
+      let team = teams[details.team - 1]
+      if (details.position === 'offense') {
+        if (team.off) {
+          throw new Meteor.Error('invalid-parameters', 'Team ' + details.team + ' offense is already taken')
+        } else {
+          team.off = user
+        }
+      } else {
+        if (team.def) {
+          throw new Meteor.Error('invalid-parameters', 'Team ' + details.team + ' defense is already taken')
+        } else {
+          team.def = user
+        }
+      }
 
       Games.update(gameId, { $set: {
         teams: teams
@@ -54,6 +66,25 @@ Meteor.methods({
       })
     } else {
       throw new Meteor.Error('invalid-permissions', 'You do not have valid permissions')
+    }
+  },
+
+  deleteGame: (id) => {
+    let user = Meteor.userId(),
+        game = Games.findOne(id)
+
+    if (!user) {
+      throw new Meteor.Error('invalid-permissions', 'You do not have valid permissions')
+    } else if (!game) {
+      throw new Meteor.Error('invalid-parameters', id + ' does not match a game')
+    } else if (!game.winner) {
+      throw new Meteor.Error('invalid-permissions', 'You cannot delete a finished game')
+    } else {
+      Games.remove(id, (err) => {
+        if (err) {
+          throw new Meteor.Error('db-remove-fail', 'Games failed to remove ' + id)
+        }
+      })
     }
   }
 })

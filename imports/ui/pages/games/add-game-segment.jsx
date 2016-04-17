@@ -33,7 +33,7 @@ export default class AddGameSegment extends React.Component {
           <div className="field">
             <div id="leagueCheckbox" className="ui toggle checkbox">
               <label>Is League Game</label>
-              <input type="checkbox" name="league" />
+              <input type="checkbox" name="league" className="hidden" />
             </div>
           </div>
           <input type="submit" value="Submit" className="ui fluid primary button" />

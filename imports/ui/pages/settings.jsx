@@ -100,13 +100,13 @@ export default class Settings extends React.Component {
               <div className="field">
                 <div id="offenseCheckbox" className="ui toggle checkbox">
                   <label>Offense</label>
-                  <input type="checkbox" name="offense" defaultChecked={ offense } />
+                  <input type="checkbox" name="offense" defaultChecked={ offense } className="hidden" />
                 </div>
               </div>
               <div className="field">
                 <div id="defenseCheckbox" className="ui toggle checkbox">
                   <label>Defense</label>
-                  <input type="checkbox" name="defense" defaultChecked={ defense } />
+                  <input type="checkbox" name="defense" defaultChecked={ defense } className="hidden" />
                 </div>
               </div>
               <input type="submit" value="Submit" className={ buttonClass + ' primary' } />

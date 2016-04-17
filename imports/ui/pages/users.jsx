@@ -2,7 +2,11 @@ import React from 'react'
 
 export default class Users extends React.Component {
   renderUsers() {
-    return this.props.users.map((u, i) => (
+    let users = this.props.users
+
+    if (users.length === 0) return <span>No users</span>
+
+    return users.map((u, i) => (
       <div key={ i } className="item">
         <div className="content">
           <div className="header">{ u.displayName }</div>
