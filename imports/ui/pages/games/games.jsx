@@ -31,7 +31,7 @@ export default class Games extends React.Component {
   renderGames() {
     let pendingGames = this.props.games.filter((g) => !g.winner).sort((a, b) => a.created > b.created)
 
-    if (pendingGames.length === 0) return <span>No pending games</span>
+    if (pendingGames.length === 0) return <div className="padded-content">No pending games</div>
 
     return pendingGames.map((g, i) =>
       <Game key={ i } game={ g } users={ this.props.users } />

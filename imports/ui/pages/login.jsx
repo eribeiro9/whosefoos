@@ -27,7 +27,7 @@ const Login = () => (
           <div className="field">
             <div className="ui left icon input">
               <i className="user icon"></i>
-              <input type="text" name="user" placeholder="Username or E-mail" />
+              <input type="text" name="user" placeholder="Username" />
             </div>
           </div>
           <div className="field">
