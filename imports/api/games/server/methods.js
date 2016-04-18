@@ -69,6 +69,41 @@ Meteor.methods({
     }
   },
 
+  completeGame: (results) => {
+    let user = Meteor.userId()
+
+    if (user) {
+      let game = Games.findOne(results.gameId),
+          teams = game.teams
+
+      if (results.winner !== 1 && results.winner !== 2) {
+        throw new Meteor.Error('invalid-parameters', 'Must declare a winner')
+      }
+
+      if (results.colors) {
+        teams[0].color = results.colors[0]
+        teams[1].color = results.colors[1]
+      }
+
+      if (isNaN(results.score[0])) {
+        results.score = undefined
+      }
+
+      Games.update(results.gameId, { $set: {
+        teams: teams,
+        winner: results.winner,
+        score: results.score,
+        completed: new Date()
+      }}, (err) => {
+        if (err) {
+          throw new Meteor.Error('db-update-fail', 'Games failed to update ' + results.gameId)
+        }
+      })
+    } else {
+      throw new Meteor.Error('invalid-permissions', 'You do not have valid permissions')
+    }
+  },
+
   deleteGame: (id) => {
     let user = Meteor.userId(),
         game = Games.findOne(id)
@@ -77,7 +112,7 @@ Meteor.methods({
       throw new Meteor.Error('invalid-permissions', 'You do not have valid permissions')
     } else if (!game) {
       throw new Meteor.Error('invalid-parameters', id + ' does not match a game')
-    } else if (!game.winner) {
+    } else if (game.winner) {
       throw new Meteor.Error('invalid-permissions', 'You cannot delete a finished game')
     } else {
       Games.remove(id, (err) => {

@@ -2,6 +2,7 @@ import React from 'react'
 import { Meteor } from 'meteor/meteor'
 
 import PositionButton from './position-button.jsx'
+import CompleteGameForm from './complete-game-form.jsx'
 
 export default class Game extends React.Component {
   constructor(props) {
@@ -71,12 +72,13 @@ export default class Game extends React.Component {
     }
 
     if (this.state.completingGame) {
-      var completeItem = <div></div>
+      var completeItem = <CompleteGameForm game={ this.props.game } users={ users } hide={ this.stopComplete } />
     }
 
     if (this.state.deletingGame) {
       var deleteItem = (
         <div className="padded-content">
+          <div className="ui divider"></div>
           <h3 className="ui header">Delete game?</h3>
           <button type="button" onClick={ this.deleteGame } className="ui red fluid button">Delete</button>
           <button type="button" onClick={ this.stopDelete } className="ui fluid button">Cancel</button>
@@ -86,38 +88,40 @@ export default class Game extends React.Component {
 
     return (
       <div className="ui item">
-        <div className="ui grid">
-          <div className="sixteen wide mobile ten wide tablet ten wide computer column">
-            <div className="ui centered grid">
-              <div className="sixteen wide mobile seven wide computer column">
-                <PositionButton gameId={ gameId } team={ 1 } position="offense" user={ off1 } />
-                <PositionButton gameId={ gameId } team={ 1 } position="defense" user={ def1 } />
-              </div>
-              <div className="sixteen wide mobile two wide computer column">
-                <span> vs. </span>
-              </div>
-              <div className="sixteen wide mobile seven wide computer column">
-                <PositionButton gameId={ gameId } team={ 2 } position="offense" user={ off2 } />
-                <PositionButton gameId={ gameId } team={ 2 } position="defense" user={ def2 } />
+        <div className="padded-content">
+          <div className="ui grid">
+            <div className="sixteen wide mobile ten wide tablet ten wide computer column">
+              <div className="ui centered grid">
+                <div className="sixteen wide mobile seven wide computer column">
+                  <PositionButton gameId={ gameId } team={ 1 } position="offense" user={ off1 } />
+                  <PositionButton gameId={ gameId } team={ 1 } position="defense" user={ def1 } />
+                </div>
+                <div className="sixteen wide mobile two wide computer column">
+                  <span> vs. </span>
+                </div>
+                <div className="sixteen wide mobile seven wide computer column">
+                  <PositionButton gameId={ gameId } team={ 2 } position="offense" user={ off2 } />
+                  <PositionButton gameId={ gameId } team={ 2 } position="defense" user={ def2 } />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="sixteen wide mobile six wide tablet six wide computer column">
-            <div className="ui equal width grid">
-              <div className="column">
-                { leaguelabel }
-              </div>
-              <div className="column">
-                <button type="button" onClick={ this.toggleComplete } className="ui icon button">
-                  <i className="checkmark icon"></i>
-                  Complete
-                </button>
-              </div>
-              <div className="column">
-                <button type="button" onClick={ this.toggleDelete } className="ui icon button">
-                  <i className="trash icon"></i>
-                  Delete
-                </button>
+            <div className="sixteen wide mobile six wide tablet six wide computer column">
+              <div className="ui equal width grid">
+                <div className="column">
+                  { leaguelabel }
+                </div>
+                <div className="column">
+                  <button type="button" onClick={ this.toggleComplete } className="ui icon button">
+                    <i className="checkmark icon"></i>
+                    Complete
+                  </button>
+                </div>
+                <div className="column">
+                  <button type="button" onClick={ this.toggleDelete } className="ui icon button">
+                    <i className="trash icon"></i>
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           </div>
