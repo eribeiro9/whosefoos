@@ -86,6 +86,25 @@ export default class Game extends React.Component {
       )
     }
 
+    if (Meteor.userId()) {
+      var completeColumn = (
+        <div className="column">
+          <button type="button" onClick={ this.toggleComplete } className="ui icon button">
+            <i className="checkmark icon"></i>
+            Complete
+          </button>
+        </div>
+      )
+      var deleteColumn = (
+        <div className="column">
+          <button type="button" onClick={ this.toggleDelete } className="ui icon button">
+            <i className="trash icon"></i>
+            Delete
+          </button>
+        </div>
+      )
+    }
+
     return (
       <div className="ui item">
         <div className="padded-content">
@@ -110,18 +129,8 @@ export default class Game extends React.Component {
                 <div className="column">
                   { leaguelabel }
                 </div>
-                <div className="column">
-                  <button type="button" onClick={ this.toggleComplete } className="ui icon button">
-                    <i className="checkmark icon"></i>
-                    Complete
-                  </button>
-                </div>
-                <div className="column">
-                  <button type="button" onClick={ this.toggleDelete } className="ui icon button">
-                    <i className="trash icon"></i>
-                    Delete
-                  </button>
-                </div>
+                { completeColumn }
+                { deleteColumn }
               </div>
             </div>
           </div>
