@@ -9,7 +9,7 @@ export default class Users extends React.Component {
     if (users.length === 0) return <span>No users</span>
 
     return users.map((u, i) => {
-      let gamesPlayed = games.filter((g) => g.teams.some((t) => t.off === user || t.def === user)),
+      let gamesPlayed = games.filter((g) => g.winner && g.teams.some((t) => t.off === user || t.def === user)),
           wins = gamesPlayed.filter((g) => {
             let team = g.teams[g.winner - 1]
             return team.off === user || team.def === user
