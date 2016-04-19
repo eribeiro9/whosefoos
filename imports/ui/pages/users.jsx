@@ -8,19 +8,6 @@ export default class Users extends React.Component {
     if (users.length === 0) return <span>No users</span>
 
     return users.map((u, i) => {
-      let gamesPlayed = games.filter((g) => g.winner && g.teams.some((t) => t.off === u._id || t.def === u._id)),
-          wins = gamesPlayed.filter((g) => {
-            let team = g.teams[g.winner - 1]
-            return team.off === u._id || team.def === u._id
-          }),
-          losses = gamesPlayed.filter((g) => wins.indexOf(g) < 0)
-
-      let wlRatio = wins.length + losses.length > 0
-        ? losses.length === 0
-          ? wins.length.toFixed(2)
-          : (wins.length / losses.length).toFixed(2)
-        : '0.00'
-
       if (u.positions.includes('offense')) {
         var offLabel = <div className="ui teal label">offense</div>
       }
@@ -36,7 +23,7 @@ export default class Users extends React.Component {
                 Games Played
               </div>
               <div className="value">
-                { gamesPlayed.length }
+                { u.stats.gamesPlayed }
               </div>
             </div>
             <div className="ui tiny statistic">
@@ -44,7 +31,7 @@ export default class Users extends React.Component {
                 W/L Ratio
               </div>
               <div className="value">
-                { wlRatio }
+                { u.stats.wlRatio }
               </div>
             </div>
           </div>
