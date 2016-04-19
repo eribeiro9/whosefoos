@@ -86,7 +86,7 @@ Meteor.methods({
       }
 
       if (isNaN(results.score[0])) {
-        results.score = undefined
+        results.score = void 0
       }
 
       Games.update(results.gameId, { $set: {
