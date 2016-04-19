@@ -2,21 +2,20 @@ import React from 'react'
 
 export default class Users extends React.Component {
   renderUsers() {
-    let user = Meteor.userId(),
-        users = this.props.users,
+    let users = this.props.users,
         games = this.props.games
 
     if (users.length === 0) return <span>No users</span>
 
     return users.map((u, i) => {
-      let gamesPlayed = games.filter((g) => g.winner && g.teams.some((t) => t.off === user || t.def === user)),
+      let gamesPlayed = games.filter((g) => g.winner && g.teams.some((t) => t.off === u._id || t.def === u._id)),
           wins = gamesPlayed.filter((g) => {
             let team = g.teams[g.winner - 1]
-            return team.off === user || team.def === user
+            return team.off === u._id || team.def === u._id
           }),
           losses = gamesPlayed.filter((g) => wins.indexOf(g) < 0)
 
-      let wlRatio = wins.length + losses.length
+      let wlRatio = wins.length + losses.length > 0
         ? losses.length === 0
           ? wins.length.toFixed(2)
           : (wins.length / losses.length).toFixed(2)
